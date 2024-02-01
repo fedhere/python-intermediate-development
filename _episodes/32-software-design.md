@@ -21,6 +21,9 @@ Such components can be as small as a single function, or be a software package i
 In this episode, we'll be looking at how we can design our software
 to ensure it meets the requirements,
 but also retains the other qualities of good software.
+Software design, as opposed to software requirements, deals with **how** a project will be realized in
+terms of data structures, algorithms and system architecture. Requirements, on the other hand,
+specify **what** must be accomplished.
 
 As a piece of software grows,
 it will reach a point where there's too much code for us to keep in mind at once.
@@ -28,9 +31,13 @@ At this point, it becomes particularly important that the software be designed s
 What should be the overall structure of our software,
 how should all the pieces of functionality fit together,
 and how should we work towards fulfilling this overall design throughout development?
- Similar to the software requirements, the actual implementation and timeline https://ieeexplore.ieee.org/document/278258
+ Similar to the software requirements, the actual implementation and timeline
 of the development process should be documented. One example are the
-[IEEE software design descriptions](https://ieeexplore.ieee.org/document/278258). 
+[IEEE software design descriptions](https://ieeexplore.ieee.org/document/278258) and as 
+indicated in the requirements episode, an adaption for the [Software taskforce of the Transients and Variable Stars
+LSST Science Collaboration](https://lsst-tvssc.github.io/taskForces/software_task_force.html) 
+can be found under Documents.
+
 
 **Software design**, covers some of the following aspects:
 
@@ -131,7 +138,7 @@ Aspirationally, what makes good code can be summarised in the following quote fr
 [Intent HG blog](https://intenthq.com/blog/it-audience/what-is-good-code-a-scientific-definition/):
 
 > *“Good code is written so that is readable, understandable,
-> covered by automated tests, not over complicated
+> covered by automated tests, not overcomplicated
 > and does well what is intended to do.”*
 
 By taking time to design our software to be easily modifiable and extensible,

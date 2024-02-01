@@ -17,13 +17,20 @@ keypoints:
 ---
 
 The requirements of our software are the basis on which the whole project rests -
-if we get the requirements wrong, we'll build the wrong software.
+if we get the requirements wrong, we'll build the wrong software. They define **what**
+the software does.
 However, it's unlikely that we'll be able to determine all of the requirements upfront.
 Especially when working in a research context,
 requirements are flexible and change as we develop our software. There are 
 guidelines for preparing and carrying out a requirements analysis. A
-comprehensive overview how to prepare and report requirements can be
+comprehensive overview how to prepare and report requirements can be found
 in the [IEEE Guide for Software Requirements Specifications](https://ieeexplore.ieee.org/document/278253).
+The exact scope of such a document depends heavily on the research or business area. 
+The [Software taskforce of the Transients and Variable Stars
+LSST Science Collaboration](https://lsst-tvssc.github.io/taskForces/software_task_force.html) 
+maintains documents related to various software development aspects including templates
+for software requirements and design documents. 
+
 
 ## Types of Requirements
 
