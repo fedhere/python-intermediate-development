@@ -12,9 +12,9 @@ objectives:
 - "Identify different types of relationship between concepts within a program"
 - "Structure data within a program using these relationships"
 keypoints:
-- "Object oriented programming is a programming paradigm based on the concept of classes, which encapsulate data and code."
+- "Object oriented programming is a programming paradigm based on the concept of classes. A class encapsulate both data and code designed to work with those data."
 - "Classes allow us to organise data into distinct concepts."
-- "By breaking down our data into classes, we can reason about the behaviour of parts of our data."
+- "By breaking down our code into classes, we can reason about the behaviour of parts of our data."
 - "Relationships between concepts can be described using inheritance (*is a*) and composition (*has a*)."
 ---
 
@@ -46,24 +46,24 @@ data = np.array([[1., 2., 3.],
 {: .language-python}
 
 Using this data structure has the advantage of
-being able to use NumPy operations to process the data
-and Matplotlib to plot it,
+being able to use (e.g.) NumPy operations to process the data
+and (e.g.) Matplotlib to plot it,
 but often we need to have more structure than this.
-For example, we may need to attach more information about the patients
-and store this alongside our measurements of inflammation.
+For example, we may need to attach more information about the astrophysical objects that we observe
+and store this alongside our measurements of luminosity.
 
-We can do this using the Python data structures we're already familiar with,
+We can do this using the Python data structures we're already familiar with:
 dictionaries and lists.
-For instance, we could attach a name to each of our patients:
+For instance, we could attach a SN name to each of our lightcurve of a SN:
 
 ~~~
 patients = [
     {
-        'name': 'Alice',
+        'name': SN2008D
         'data': [1., 2., 3.],
     },
     {
-        'name': 'Bob',
+        'name': SN2011fe
         'data': [4., 5., 6.],
     },
 ]
@@ -72,8 +72,8 @@ patients = [
 
 > ## Exercise: Structuring Data
 >
-> Write a function, called `attach_names`,
-> which can be used to attach names to our patient dataset.
+> Write a function, called `attach_name`,
+> which can be used to attach name value to our patient dataset.
 > When used as below, it should produce the expected output.
 >
 > If you're not sure where to begin,
@@ -85,7 +85,7 @@ patients = [
 > data = np.array([[1., 2., 3.],
 >                  [4., 5., 6.]])
 >
-> output = attach_names(data, ['Alice', 'Bob'])
+> output = attach_name(data, [1.2, 0.6])
 > print(output)
 > ~~~
 > {: .language-python}
@@ -93,11 +93,11 @@ patients = [
 > ~~~
 > [
 >     {
->         'name': 'Alice',
+>         'M': 2.1,
 >         'data': [1., 2., 3.],
 >     },
 >     {
->         'name': 'Bob',
+>         'M': 0.6,
 >         'data': [4., 5., 6.],
 >     },
 > ]
@@ -110,7 +110,7 @@ patients = [
 > > is to use the `range` function to index into both lists at the same location:
 > >
 > > ~~~
-> > def attach_names(data, names):
+> > def attach_name(data, names):
 > >     """Create datastructure containing patient records."""
 > >     output = []
 > >
@@ -129,9 +129,9 @@ patients = [
 > >
 > > > ## A Better Solution
 > > >
-> > > What would happen if the `data` and `names` inputs were different lengths?
+> > > What would happen if the `data` and `name` inputs were different lengths?
 > > >
-> > > If `names` is longer, we'll loop through, until we run out of rows in the `data` input,
+> > > If `name` is longer, we'll loop through, until we run out of rows in the `data` input,
 > > > at which point we'll stop processing the last few names.
 > > > If `data` is longer, we'll loop through, but at some point we'll run out of names -
 > > > but this time we try to access part of the list that doesn't exist,
@@ -157,7 +157,7 @@ patients = [
 > > >     output = []
 > > >
 > > >     for data_row, name in zip(data, names):
-> > >         output.append({'name': name,
+> > >         output.append({'names': name,
 > > >                        'data': data_row})
 > > >
 > > >     return output
@@ -235,18 +235,18 @@ Let's start with a minimal example of a class representing our patients.
 ~~~
 # file: inflammation/models.py
 
-class Patient:
+class lightcurve:
     def __init__(self, name):
         self.name = name
         self.observations = []
 
-alice = Patient('Alice')
-print(alice.name)
+SN2008D = lightcurve('SN2008D')
+print(SN2008D.name)
 ~~~
 {: .language-python}
 
 ~~~
-Alice
+SN2008D
 ~~~
 {: .output}
 
@@ -257,7 +257,7 @@ inside a new instance of the class -
 this is very similar to **constructors** in other languages,
 so the term is often used in Python too.
 The `__init__` method is called every time we create a new instance of the class,
-as in `Patient('Alice')`.
+as in `lightcurve(1.2)`.
 The argument `self` refers to the instance on which we are calling the method
 and gets filled in automatically by Python -
 we do not need to provide a value for this when we call the method.
@@ -297,9 +297,9 @@ this is done for us by Python.
 Let's add another method on our Patient class that adds a new observation to a Patient instance.
 
 ~~~
-# file: inflammation/models.py
+# file: inflammation/lightcurves.py
 
-class Patient:
+class lightcurve:
     """A patient in an inflammation study."""
     def __init__(self, name):
         self.name = name
@@ -320,17 +320,17 @@ class Patient:
         self.observations.append(new_observation)
         return new_observation
 
-alice = Patient('Alice')
-print(alice)
+SN2008D = lightcurve('SN2008D')
+print(SN2008D)
 
-observation = alice.add_observation(3)
+observation = SN2008D.add_observation(3)
 print(observation)
-print(alice.observations)
+print(SN2008D.observations)
 ~~~
 {: .language-python}
 
 ~~~
-<__main__.Patient object at 0x7fd7e61b73d0>
+<__main__.lightcurves object at 0x7fd7e61b73d0>
 {'day': 0, 'value': 3}
 [{'day': 0, 'value': 3}]
 ~~~
@@ -383,9 +383,9 @@ We may want the print statement to display the object's name instead.
 We can achieve this by overriding the `__str__` method of our class.
 
 ~~~
-# file: inflammation/models.py
+# file: inflammation/lightcurves.py
 
-class Patient:
+class lightcurves:
     """A patient in an inflammation study."""
     def __init__(self, name):
         self.name = name
@@ -412,8 +412,8 @@ class Patient:
         return self.name
 
 
-alice = Patient('Alice')
-print(alice)
+SN2008D = Patient('SN2008D')
+print(SN2008D)
 ~~~
 {: .language-python}
 
@@ -424,7 +424,7 @@ Alice
 
 These dunder methods are not usually called directly,
 but rather provide the implementation of some functionality we can use -
-we didn't call `alice.__str__()`,
+we didn't call `SN2008D.__str__()`,
 but it was called for us when we did `print(alice)`.
 Some we see quite commonly are:
 
@@ -441,7 +441,7 @@ section of the Python documentation.
 
 > ## Exercise: A Basic Class
 >
-> Implement a class to represent a book.
+> Implement a class to plot a lightcurve.
 > Your class should:
 >
 > - Have a title
@@ -482,21 +482,21 @@ Properties are methods which behave like data -
 when we want to access them, we do not need to use brackets to call the method manually.
 
 ~~~
-# file: inflammation/models.py
+# file: inflammation/lightcurves.py
 
-class Patient:
+class lightcurve:
     ...
 
     @property
     def last_observation(self):
         return self.observations[-1]
 
-alice = Patient('Alice')
+alice = Patient('SN2008D')
 
 alice.add_observation(3)
 alice.add_observation(4)
 
-obs = alice.last_observation
+obs = SN2008D.last_observation
 print(obs)
 ~~~
 {: .language-python}
@@ -579,8 +579,8 @@ class Patient:
         return self.name
 
 
-alice = Patient('Alice')
-obs = alice.add_observation(3)
+SN2008D = Patient('SN2008D')
+obs = SN2008D.add_observation(3)
 
 print(obs)
 ~~~
@@ -617,7 +617,7 @@ If the class **inherits** from another class,
 we include the parent class name in brackets.
 
 ~~~
-# file: inflammation/models.py
+# file: inflammation/lightcurves.py
 
 class Observation:
     def __init__(self, day, value):
@@ -627,14 +627,14 @@ class Observation:
     def __str__(self):
         return str(self.value)
 
-class Person:
+class sn:
     def __init__(self, name):
         self.name = name
 
     def __str__(self):
         return self.name
 
-class Patient(Person):
+class lightcurves(sn):
     """A patient in an inflammation study."""
     def __init__(self, name):
         super().__init__(name)
@@ -653,25 +653,25 @@ class Patient(Person):
         self.observations.append(new_observation)
         return new_observation
 
-alice = Patient('Alice')
+SN2008D = Patient('SN2008D')
 print(alice)
 
-obs = alice.add_observation(3)
+obs = SN2008D.add_observation(3)
 print(obs)
 
-bob = Person('Bob')
-print(bob)
+SN2011fe = Person('SN2011fe')
+print(SN2011fe)
 
-obs = bob.add_observation(4)
+obs = SN2011fe.add_observation(4)
 print(obs)
 ~~~
 {: .language-python}
 
 ~~~
-Alice
+SN208D
 3
-Bob
-AttributeError: 'Person' object has no attribute 'add_observation'
+SN2011fe
+AttributeError: 'lightcurve' object has no attribute 'add_observation'
 ~~~
 {: .output}
 
@@ -701,7 +701,7 @@ providing the `name` variable that `Person.__init__` requires.
 This is quite a common pattern, particularly for `__init__` methods,
 where we need to make sure an object is initialised as a valid `X`,
 before we can initialise it as a valid `Y` -
-e.g. a valid `Person` must have a name,
+e.g. a valid `lightcurve` must have a name,
 before we can properly initialise a `Patient` model with their inflammation data.
 
 
